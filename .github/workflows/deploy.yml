@@ -18,11 +18,6 @@ permissions:
   pages: write
   id-token: write
 
-# 确保同时只有一个部署任务运行
-concurrency:
-  group: "pages"
-  cancel-in-progress: false
-
 jobs:
   deploy:
     # 使用可复用的 workflow
