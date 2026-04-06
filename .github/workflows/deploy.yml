@@ -1,0 +1,40 @@
+# 博客自动部署配置
+# 使用 blog-workflow 发布到 GitHub Pages
+# 文档: https://github.com/AlphaZx-CJY/blog-workflow
+
+name: Deploy Blog
+
+on:
+  # 每次推送到 main 分支时触发部署
+  push:
+    branches: [main]
+  
+  # 允许手动触发部署
+  workflow_dispatch:
+
+# 设置权限
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# 确保同时只有一个部署任务运行
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    # 使用可复用的 workflow
+    uses: AlphaZx/blog-workflow/.github/workflows/publish-blog.yml@main
+    
+    # 可选：自定义参数
+    # with:
+    #   node-version: '20'
+    #   posts-path: 'posts'           # Markdown 文件目录
+    #   config-path: 'blog.config.yml'
+    #   blog-generator-version: 'main'
+    
+    # 必须提供 GitHub Token
+    secrets:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

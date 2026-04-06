@@ -1,0 +1,41 @@
+# 博客配置文件
+# 所有配置项都是可选的，不配置的项目不会显示
+
+# 博客标题（可选，默认 "My Blog"）
+title: "丛继晔的博客"
+
+# 关于我部分（可选）
+about:
+  # avatar: "/images/avatar.png"  # 头像路径（可选）
+  description: "软件工程师 · AI 工具开发者。喜欢地理，喜欢将复杂的东西简单化。"
+
+# 友链列表（可选）
+friends:
+  - name: "GitHub"
+    url: "https://github.com/AlphaZx-CJY"
+  - name: "CSDN"
+    url: "https://blog.csdn.net/weixin_40448140"
+  - name: "个人主页"
+    url: "https://www.congjiye.com/"
+
+# 联系方式（可选）
+social:
+  github: "https://github.com/AlphaZx-CJY"
+  email: "congjiye@outlook.com"
+#   rss: "/feed.xml"
+
+# 评论系统（可选）
+# 目前支持 giscus（基于 GitHub Discussions）
+# 配置步骤：
+# 1. 确保仓库已开启 Discussions
+# 2. 访问 https://giscus.app 生成配置
+# 3. 将配置填入下方
+# comments:
+#   provider: "giscus"
+#   repo: "username/blog-comments"
+#   repoId: "R_kgDOxxxxxx"
+#   category: "Announcements"
+#   categoryId: "DIC_kwDOxxxxxx"
+#   mapping: "pathname"
+#   reactionsEnabled: true
+#   strict: false
