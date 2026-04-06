@@ -23,12 +23,9 @@ jobs:
     # 使用可复用的 workflow
     uses: AlphaZx-CJY/blog-workflow/.github/workflows/publish-blog.yml@main
     
-    # 可选：自定义参数
-    # with:
-    #   node-version: '20'
-    #   posts-path: 'posts'           # Markdown 文件目录
-    #   config-path: 'blog.config.yml'
-    #   blog-generator-version: 'main'
+    # 自定义参数
+    with:
+      posts-path: 'posts'             # Markdown 文件目录
     
     # 必须提供 GitHub Token
     secrets:
