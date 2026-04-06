@@ -37,4 +37,4 @@ jobs:
     
     # 必须提供 GitHub Token
     secrets:
-      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
