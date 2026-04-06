@@ -1,6 +1,7 @@
 ---
 title: 你好，世界
 date: 2026-04-06
+published: true
 tags: ["随笔", "介绍"]
 category: 生活
 summary: 欢迎来到我的个人博客！这是我的第一篇文章。
