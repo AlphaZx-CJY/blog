@@ -30,12 +30,12 @@ social:
 # 1. 确保仓库已开启 Discussions
 # 2. 访问 https://giscus.app 生成配置
 # 3. 将配置填入下方
-# comments:
-#   provider: "giscus"
-#   repo: "username/blog-comments"
-#   repoId: "R_kgDOxxxxxx"
-#   category: "Announcements"
-#   categoryId: "DIC_kwDOxxxxxx"
-#   mapping: "pathname"
-#   reactionsEnabled: true
-#   strict: false
+comments:
+  provider: "giscus"
+  repo: "AlphaZx-CJY/blog"
+  repoId: "R_kgDOR6xOwg"
+  category: "General"
+  categoryId: "DIC_kwDOR6xOws4C6Jfu"
+  mapping: "pathname"
+  reactionsEnabled: true
+  strict: false
