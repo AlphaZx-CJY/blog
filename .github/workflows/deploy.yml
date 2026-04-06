@@ -26,7 +26,7 @@ concurrency:
 jobs:
   deploy:
     # 使用可复用的 workflow
-    uses: AlphaZx/blog-workflow/.github/workflows/publish-blog.yml@main
+    uses: AlphaZx-CJY/blog-workflow/.github/workflows/publish-blog.yml@main
     
     # 可选：自定义参数
     # with:
