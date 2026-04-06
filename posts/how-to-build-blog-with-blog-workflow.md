@@ -1,47 +1,39 @@
 ---
-title: 如何使用 blog-workflow 搭建个人博客
+title: 我是怎么用 blog-workflow 搭这个博客的
 date: 2026-04-06
 tags: ["教程", "博客", "GitHub Pages"]
 category: 技术
-summary: 详细介绍如何使用 blog-generator 和 blog-workflow 快速搭建并部署个人博客到 GitHub Pages。
+summary: 记录一下搭建这个博客的过程，用到的工具和踩过的坑。
 ---
 
-本文将手把手教你如何使用 [blog-generator](https://github.com/AlphaZx-CJY/blog-generator) 和 [blog-workflow](https://github.com/AlphaZx-CJY/blog-workflow) 搭建一个功能完善的个人博客，并自动部署到 GitHub Pages。
+折腾个人博客这件事，我试过 WordPress、Hexo、Hugo，最后发现还是这种「写 Markdown 就自动部署」的方式最省事。这篇记录一下我是怎么用 [blog-workflow](https://github.com/AlphaZx-CJY/blog-workflow) 把这个博客搭起来的。
 
-## 什么是 blog-workflow？
+## blog-workflow 是什么
 
-**blog-workflow** 是一个可复用的 GitHub Workflow，它让你只需要写 Markdown，就能自动构建并部署一个漂亮的博客站点。
+简单来说，它是一个 GitHub Workflow。你把 Markdown 文件 push 到仓库，它自动帮你生成静态网站并部署到 GitHub Pages。不需要本地装 Node、不用手动构建，一切交给 GitHub Actions。
 
-基于 **blog-generator** 构建，支持：
+功能方面，我比较在意的几点它都有：Markdown 写作、代码高亮、标签分类、深色模式、移动端适配，还有全文搜索。评论系统用的 Giscus，基于 GitHub Discussions，不用额外注册。
 
-- ✅ Markdown + YAML 前言写作
-- ✅ 代码高亮、标签、分类、归档
-- ✅ 目录导航、阅读进度条
-- ✅ 深色/浅色主题切换
-- ✅ 本地搜索功能
-- ✅ Giscus 评论系统
-- ✅ 移动端适配
+## 具体怎么操作
 
-## 快速开始
+**第一步：建仓库**
 
-### 1. 创建博客仓库
-
-新建一个 GitHub 仓库，目录结构如下：
+目录结构大概长这样：
 
 ```
 my-blog/
-├── .github/
-│   └── workflows/
-│       └── deploy.yml      # 部署配置
-├── posts/                  # 文章目录
+├── .github/workflows/deploy.yml   # 部署配置
+├── posts/                         # 放文章的地方
 │   └── hello-world.md
-├── images/                 # 图片资源
-└── blog.config.yml         # 博客配置
+├── images/                        # 图片
+└── blog.config.yml                # 博客配置
 ```
 
-### 2. 配置部署 Workflow
+文章我习惯放 `posts/` 目录，和配置分开比较清爽。
 
-创建 `.github/workflows/deploy.yml`：
+**第二步：写 deploy.yml**
+
+在 `.github/workflows/deploy.yml` 里贴这段：
 
 ```yaml
 name: Deploy Blog
@@ -60,26 +52,23 @@ jobs:
   deploy:
     uses: AlphaZx-CJY/blog-workflow/.github/workflows/publish-blog.yml@main
     with:
-      posts-path: 'posts'    # 文章存放目录
+      posts-path: 'posts'
     secrets:
       GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 ```
 
-> ⚠️ **注意**：使用 `GH_TOKEN` 而不是 `GITHUB_TOKEN`，后者是系统保留名称会导致错误。
+注意这里用的是 `GH_TOKEN`，不是 `GITHUB_TOKEN`。一开始我写的 `GITHUB_TOKEN`，结果报 reserved name 错误，查了好久才发现这个问题。
 
-### 3. 配置博客信息
+**第三步：写配置**
 
-创建 `blog.config.yml`：
+`blog.config.yml` 里填博客基本信息：
 
 ```yaml
-# 博客标题
 title: "丛继晔的博客"
 
-# 关于我
 about:
   description: "软件工程师 · AI 工具开发者"
 
-# 友链
 friends:
   - name: "GitHub"
     url: "https://github.com/AlphaZx-CJY"
@@ -88,100 +77,71 @@ friends:
   - name: "个人主页"
     url: "https://www.congjiye.com/"
 
-# 社交链接
 social:
   github: "https://github.com/AlphaZx-CJY"
   email: "congjiye@outlook.com"
 ```
 
-### 4. 开启 GitHub Pages
+**第四步：开 Pages**
 
-进入仓库 **Settings → Pages**：
-- Source 选择 **GitHub Actions**
+进仓库 Settings → Pages，Source 选 GitHub Actions。这一步很容易忘，我就因为没开这个排查了半天。
 
-### 5. 提交并推送
+**第五步：推送**
 
 ```bash
 git add .
-git commit -m "Initial blog setup"
+git commit -m "init blog"
 git push origin main
 ```
 
-稍等片刻，博客就会自动部署到 `https://yourusername.github.io/blog/`
+push 完等一两分钟，GitHub Actions 跑完就能访问了。地址一般是 `https://yourusername.github.io/blog/`。
 
-## 写作指南
+## 文章怎么写
 
-### Markdown 文章格式
+每篇文章开头要加一段 YAML 前言：
 
 ```markdown
 ---
 title: 文章标题
 date: 2026-04-06
-tags: ["技术", "教程"]
+tags: ["技术", "随笔"]
 category: 技术
-summary: 文章摘要
+summary: 一段话概括内容
 ---
 
-正文内容，支持 **Markdown** 语法。
-
-```javascript
-console.log('Hello World');
-```
+正文开始...
 ```
 
-### 支持的 YAML 字段
+只有 `title` 和 `date` 是必填的，其他可有可无。另外有个 `published` 字段，默认是 true，设为 false 就不会发布这篇文章。
 
-| 字段 | 说明 | 必填 |
-|------|------|------|
-| `title` | 文章标题 | ✅ |
-| `date` | 发布日期 | ✅ |
-| `tags` | 标签数组 | ❌ |
-| `category` | 分类 | ❌ |
-| `summary` | 摘要 | ❌ |
-| `published` | 是否发布（默认 true）| ❌ |
+## 本地预览
 
-## 本地预览（可选）
-
-如果你想在本地预览博客效果：
+如果想本地看效果，可以这么搞：
 
 ```bash
-# 克隆 blog-generator
 git clone https://github.com/AlphaZx-CJY/blog-generator.git
 cd blog-generator
-
-# 安装依赖
 npm install
-
-# 复制你的文章
 cp /path/to/your/posts/*.md content/posts/
-
-# 开发模式
 npm run dev
 ```
 
-访问 http://localhost:3000 查看效果。
+然后开 `http://localhost:3000` 看。不过我个人觉得没必要，直接 push 让 GitHub 构建也挺快的，出问题再改就是了。
 
-## 常见问题
+## 遇到过的问题
 
-### 部署失败
+**部署失败**
+- 检查 Pages 设置里的 Source 是不是 GitHub Actions
+- 检查 workflow 有没有读写权限
+- 看 Actions 日志，一般会有具体报错
 
-1. 检查 GitHub Pages 是否已开启（Settings → Pages → Source: GitHub Actions）
-2. 检查 workflow 权限设置
-3. 查看 Actions 日志获取详细错误
+**文章没显示**
+- 确认 YAML 前言格式正确，特别是 `---` 包裹
+- 确认 date 格式是 `2026-04-06` 这种
+- 检查有没有手误写成 `published: false`
 
-### 文章未显示
+**concurrency 死锁**
+- 父 workflow 和 blog-workflow 都写了 `concurrency: group: "pages"` 会冲突
+- 把父 workflow 里的 concurrency 删掉，只保留子 workflow 的
 
-1. 确认 Markdown 文件有正确的 YAML 前言
-2. 确认 `date` 格式正确（如 `2026-04-06`）
-3. 检查是否设置了 `published: false`
-
-## 总结
-
-使用 blog-workflow 搭建博客的优势：
-
-- **零配置**：几行 YAML 即可完成部署配置
-- **自动化**：Push 即部署，无需手动操作
-- **纯 Markdown**：专注写作，无需关心样式
-- **版本控制**：文章使用 Git 管理，可追溯历史
-
-现在就开始你的博客之旅吧！
+总的来说，这套方案适合不想折腾服务器、只想安静写东西的人。配置一次之后，后续就是写 Markdown → push，剩下的都自动搞定。
