@@ -22,7 +22,13 @@ friends:
 social:
   github: "https://github.com/AlphaZx-CJY"
   email: "congjiye@outlook.com"
-#   rss: "/feed.xml"
+
+# RSS 自动生成配置（可选）
+# enabled: 是否自动生成 RSS 文件（默认 false）
+# filename: RSS 文件名（默认 feed.xml）
+rss:
+  enabled: true
+  filename: "feed.xml"
 
 # 评论系统（可选）
 # 目前支持 giscus（基于 GitHub Discussions）
