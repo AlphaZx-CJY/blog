@@ -22,13 +22,16 @@ friends:
 social:
   github: "https://github.com/AlphaZx-CJY"
   email: "congjiye@outlook.com"
+  rss: "/blog/feed.xml"  # RSS 完整路径（项目站点需要包含子目录）
 
 # RSS 自动生成配置（可选）
 # enabled: 是否自动生成 RSS 文件（默认 false）
 # filename: RSS 文件名（默认 feed.xml）
+# baseUrl: 项目站点的根路径（如 /blog），用于生成正确的 RSS 链接
 rss:
   enabled: true
   filename: "feed.xml"
+  baseUrl: "/blog"
 
 # 评论系统（可选）
 # 目前支持 giscus（基于 GitHub Discussions）
